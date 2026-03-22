@@ -5,12 +5,11 @@
 This project is a 3D computational model of an Advanced Atwood Machine featuring a coupled system on a rough inclined plane. Instead of using standard algebraic kinematics, this simulation utilizes **Euler’s Numerical Integration** to calculate motion dynamically over infinitesimal time steps ($dt = 0.001s$).
 
 ![Simulation Demo](simulation.gif) 
-*(Note: If your filename is different, change "simulation.gif" to your actual filename above)*
 
 ## Key Features
 * **Interactive Parameters:** Real-time adjustment of masses ($m1$, $m2$), coefficient of friction ($\mu$), and incline angle ($\theta$).
 * **Numerical Calculus:** Uses a discrete integration loop to update acceleration, velocity, and position.
-* **Friction Logic:** Accurately models the transition between Static and Kinetic friction, including a "breakout" threshold.
+* **Friction Logic:** Accurately models the transition between Static and Kinetic friction, including a breakout threshold.
 * **Live Graphing:** Real-time plots for Velocity vs. Time and Acceleration vs. Time.
 
 ## The Calculus Behind the Model
