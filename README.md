@@ -14,6 +14,10 @@ This project is a 3D computational model of an Advanced Atwood Machine featuring
 
 ## The Calculus Behind the Model
 The simulation solves the following differential equation for acceleration ($a$) at every time step:
+Where:
+
+* **Velocity Update:** $v_{new} = v_{old} + a \cdot dt$
+* **Position Update:** $x_{new} = x_{old} + v_{new} \cdot dt$
 
 ##  Simulation Analysis
 Our 3D model reveals several key physical behaviors that align with theoretical expectations:
@@ -28,10 +32,6 @@ By using a time step of $dt = 0.001s$, we achieve high precision in our velocity
 As the user increases the incline angle $\theta$ via the slider, the simulation dynamically reduces the Normal Force ($F_n = mg\cos(\theta)$), which in turn reduces the kinetic friction. This real-time feedback loop is the core achievement of our computational model.
 
 $$a = \frac{m_2g - m_1g\sin(\theta) - f_{fric}}{m_1 + m_2}$$
-
-Where:
-* **Velocity Update:** $v_{new} = v_{old} + a \cdot dt$
-* **Position Update:** $x_{new} = x_{old} + v_{new} \cdot dt$
 
 ## How to Run
 1. Copy the source code from `main.py`.
