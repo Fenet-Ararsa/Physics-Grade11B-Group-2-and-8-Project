@@ -14,7 +14,9 @@ This project is a 3D computational model of an Advanced Atwood Machine featuring
 
 ## The Calculus Behind the Model
 The simulation solves the following differential equation for acceleration ($a$) at every time step:
-$$a = \frac{m_2g - m_1g\sin(\theta) - f_{fric}}{m_1 + m_2}$$
+
+               $$a = \frac{m_2g - m_1g\sin(\theta) - f_{fric}}{m_1 + m_2}$$
+               
 Where:
 
 * **Velocity Update:** $v_{new} = v_{old} + a \cdot dt$
