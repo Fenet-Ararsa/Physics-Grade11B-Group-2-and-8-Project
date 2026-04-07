@@ -15,6 +15,18 @@ This project is a 3D computational model of an Advanced Atwood Machine featuring
 ## The Calculus Behind the Model
 The simulation solves the following differential equation for acceleration ($a$) at every time step:
 
+##  Simulation Analysis
+Our 3D model reveals several key physical behaviors that align with theoretical expectations:
+
+### 1. The Static Friction Breakout
+The simulation demonstrates that if $m_2g < m_1g\sin(\theta) + f_{static}$, the system remains at rest (Acceleration = 0). This confirms the "threshold" nature of friction modeled in our `compute_acceleration` function.
+
+### 2. Numerical Precision
+By using a time step of $dt = 0.001s$, we achieve high precision in our velocity curves. A larger $dt$ would cause "overshoot" errors, but our Euler integration remains stable even at high acceleration, showing a smooth linear increase in velocity.
+
+### 3. Effect of the Incline ($\theta$)
+As the user increases the incline angle $\theta$ via the slider, the simulation dynamically reduces the Normal Force ($F_n = mg\cos(\theta)$), which in turn reduces the kinetic friction. This real-time feedback loop is the core achievement of our computational model.
+
 $$a = \frac{m_2g - m_1g\sin(\theta) - f_{fric}}{m_1 + m_2}$$
 
 Where:
