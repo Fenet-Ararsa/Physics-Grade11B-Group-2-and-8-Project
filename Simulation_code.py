@@ -1,40 +1,35 @@
-# ============================================
-# ATWOOD MACHINE SIMULATION (WITH INCLINE)
-# This program simulates motion using forces,
-# friction, and Newton’s 2nd law.
-# ============================================
 Web VPython 3.2
-# Create the simulation window
+
 scene = canvas(title='Atwood Machine: Interactive Simulation',
                width=1450, height=780,
                center=vector(3.2, 2.2, 0),
                background=color.white)
 
 # ============================================================
-# Physics constants (gravity, time step, time)
+# CONSTANTS
 # ============================================================
 g, dt, t, t_max = 9.8, 0.001, 0, 20
 running = True
 
 # ============================================================
-# INPUT RANGES(to prevent invalid values)
+# INPUT RANGES
 # ============================================================
 M_MIN, M_MAX = 0.1, 10.0
 MU_MIN, MU_MAX = 0.0, 1.0
 THETA_MIN, THETA_MAX = 5, 85
 
 # ============================================================
-# USER PARAMETERS(change these to test different cases)
+# USER PARAMETERS
 # ============================================================
-m1, m2 = 2.5o, 2.3o
+m1, m2 = 2.5, 2.3
 mu_k = 0.18
 mu_s = mu_k * 1.2  
 theta_deg = 30
 theta = radians(theta_deg)
-x, v = 0.0, 0.0
+x, v = 0, 0
 
 # ============================================================
-# Scene geometry (sizes and positions of objects)
+# SCENE GEOMETRY
 # ============================================================
 table_length, table_width, table_thick, table_top_y = 12.0, 4.6, 0.35, 1.4
 ground_y = -1.8
@@ -51,13 +46,13 @@ s0, s_min, s_max = 1.2, 0.7, 3.9
 x_min, x_max = s_min - s0, s_max - s0
 
 # ============================================================
-# HELPERS to keep values within limits
+# HELPERS
 # ============================================================
 def clamp(val, low, high):
     if val < low: return low
     if val > high: return high
     return val
-# Adjust block size based on mass for visualization
+
 def block1_size_from_mass(m):
     scale = sqrt(m)
     return vector(clamp(0.35 + 0.16*scale, 0.40, 1.00), clamp(0.14 + 0.10*scale, 0.18, 0.60), clamp(0.22 + 0.09*scale, 0.25, 0.70))
@@ -123,13 +118,13 @@ def update_geometry():
 
 def update_block_sizes():
     block1.size, block2.size = block1_size_from_mass(m1), block2_size_from_mass(m2)
-# Update positions of the blocks
+
 def update_positions():
     s = clamp(s0 + x, s_min, s_max)
     block1.pos = ramp_start_line + s*incline_axis + (ramp_height/2 + block1.size.y/2)*normal_dir
     block1.axis, block1.up = incline_axis, normal_dir
     block2.pos = vector(pulley_center.x, pulley_center.y - vertical_drop0 - x - block2.size.y/2, Z_ACTION)
-# Update rope connection between objects
+
 def update_rope():
     p1, p2 = block1.pos + 0.47*block1.size.x*incline_axis, pulley_center + vector(-pulley_radius*cos(theta), -pulley_radius*sin(theta), 0)
     p3, p4 = pulley_center + vector(0, -pulley_radius, 0), block2.pos + vector(0, block2.size.y/2, 0)
@@ -145,24 +140,18 @@ def update_pulley_rotation():
     spoke.pos, spoke.axis = pulley_center + vector(0,0,0.01), vector(pulley_radius*cos(phi), pulley_radius*sin(phi), 0)
 
 def hanging_block_hits_ground(): return (block2.pos.y - block2.size.y/2) <= ground_y
-# Main physics function (calculates acceleration using forces)
+
 def compute_acceleration(v_now):
-  # Driving force (difference between hanging and incline forces)
     drive = m2*g - m1*g*sin(theta)
-  # Normal force on the inclined surface
     fn = m1*g*cos(theta)
-  # Kinetic friction (acts when object is moving)
     fk = mu_k * fn
-  # Maximum static friction (prevents motion)
     fs_max = mu_s * fn
     
     # Static logic
-  # Check if object is nearly at rest#
     if abs(v_now) < 1e-5:
         if abs(drive) <= fs_max: return 0
         else:
             f_direction = 1 if drive > 0 else -1
-          # Newton’s Second Law: acceleration = net force / total mass
             return (drive - f_direction * fk) / (m1 + m2)
     
     # Moving logic (Friction opposes velocity)
@@ -220,7 +209,7 @@ panel_bg = box(size=vector(4.2, 6.6, 0.04), color=vector(0.96,0.96,0.96))
 info = label(text='', box=False, height=11, color=color.black, line=False)
 
 update_geometry(); update_block_sizes(); update_positions()
-# Main simulation loop (runs continuously)
+
 while True:
     rate(900)
     update_geometry(); update_block_sizes()
